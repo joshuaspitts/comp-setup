@@ -39,8 +39,8 @@ if (-not ([Security.Principal.WindowsPrincipal]
 }
 
 # ── Configuration — update GITHUB_USER before pushing your repo ──────────────
-$GithubUser   = "GITHUB_USER"      # <-- replace with your GitHub username
-$GithubRepo   = "laptop-setup"
+$GithubUser   = "joshuaspitts"
+$GithubRepo   = "comp-setup"
 $GithubBranch = "main"
 $RawBase      = "https://raw.githubusercontent.com/$GithubUser/$GithubRepo/$GithubBranch"
 
