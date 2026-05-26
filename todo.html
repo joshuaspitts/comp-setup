@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laptop Setup — Remaining Tasks</title>
+<style>
+  :root {
+    --bg:       #0d0d14;
+    --surface:  #13131f;
+    --surface2: #1c1c2e;
+    --border:   #2a2a40;
+    --text:     #cdd6f4;
+    --subtext:  #6c7086;
+    --blue:     #89b4fa;
+    --lavender: #b4befe;
+    --green:    #a6e3a1;
+    --yellow:   #f9e2af;
+    --peach:    #fab387;
+    --red:      #f38ba8;
+    --mauve:    #cba6f7;
+    --teal:     #94e2d5;
+    --sky:      #89dceb;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    padding: 2.5rem 2rem;
+  }
+
+  .page { max-width: 860px; margin: 0 auto; }
+
+  header { margin-bottom: 2.5rem; }
+  header h1 { font-size: 1.75rem; color: var(--blue); font-weight: 700; letter-spacing: -0.02em; }
+  header p  { color: var(--subtext); margin-top: 0.35rem; font-size: 0.9rem; }
+
+  .progress-bar-wrap { margin-top: 1rem; background: var(--surface2); border-radius: 99px; height: 6px; overflow: hidden; }
+  .progress-bar      { height: 100%; background: linear-gradient(90deg, var(--mauve), var(--blue)); border-radius: 99px; transition: width 0.4s ease; }
+  .progress-label    { font-size: 0.8rem; color: var(--subtext); margin-top: 0.4rem; }
+
+  .section { margin-bottom: 2.5rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 0.6rem;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-header h2 { font-size: 0.95rem; font-weight: 600; color: var(--mauve); text-transform: uppercase; letter-spacing: 0.06em; }
+  .section-icon { font-size: 1rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+    margin-bottom: 0.5rem;
+    display: grid;
+    grid-template-columns: 20px 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+    transition: background 0.15s;
+    cursor: pointer;
+  }
+  .card:hover { background: var(--surface2); border-color: var(--border); }
+  .card.done  { opacity: 0.45; }
+  .card.done .card-title { text-decoration: line-through; }
+
+  .card input[type=checkbox] {
+    width: 16px; height: 16px;
+    accent-color: var(--mauve);
+    margin-top: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .card-body {}
+  .card-title { font-weight: 600; color: var(--text); font-size: 0.95rem; }
+  .card-desc  { color: var(--subtext); font-size: 0.84rem; margin-top: 0.25rem; line-height: 1.5; }
+
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 0.15rem 0.55rem;
+    border-radius: 99px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .badge-high   { background: rgba(243,139,168,0.15); color: var(--red);    border: 1px solid rgba(243,139,168,0.3); }
+  .badge-medium { background: rgba(137,180,250,0.12); color: var(--blue);   border: 1px solid rgba(137,180,250,0.25); }
+  .badge-low    { background: rgba(166,227,161,0.12); color: var(--green);  border: 1px solid rgba(166,227,161,0.25); }
+  .badge-info   { background: rgba(148,226,213,0.12); color: var(--teal);   border: 1px solid rgba(148,226,213,0.25); }
+
+  pre, code {
+    font-family: 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.82rem;
+  }
+  .snippet {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.6rem 0.85rem;
+    margin-top: 0.5rem;
+    color: var(--teal);
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.55;
+  }
+  .snippet .comment { color: var(--subtext); }
+  .snippet .flag    { color: var(--yellow); }
+
+  code { background: var(--surface2); padding: 0.1rem 0.35rem; border-radius: 4px; color: var(--sky); }
+
+  details summary { cursor: pointer; list-style: none; }
+  details summary::after { content: ' ▸'; color: var(--subtext); font-size: 0.8rem; }
+  details[open] summary::after { content: ' ▾'; }
+  details { margin-top: 0.4rem; }
+
+  .winget-id { color: var(--peach); font-size: 0.82rem; }
+
+  @media (max-width: 600px) {
+    body { padding: 1.25rem 1rem; }
+    .card { grid-template-columns: 20px 1fr; }
+    .card .badge { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1>Laptop Setup — Remaining Tasks</h1>
+  <p>Scripts: <code>%USERPROFILE%\Scripts\</code> &nbsp;·&nbsp; Updated 2026-05-26</p>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+  <div class="progress-label" id="progressLabel">0 of 0 complete</div>
+</header>
+
+<!-- ── Shell & Terminal ───────────────────────────────────── -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">🖥</span>
+    <h2>Shell &amp; Terminal</h2>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Oh My Posh — pick a theme</div>
+      <div class="card-desc">
+        <code>profile-setup.ps1</code> defaults to <code>jandedobbeleer</code>.
+        Browse and switch themes:
+        <details><summary>commands</summary>
+        <div class="snippet"><span class="comment"># list all themes</span>
+Get-ChildItem $env:POSH_THEMES_PATH | Select-Object Name
+
+<span class="comment"># edit powershell-profile.ps1, change theme, then reload</span>
+. $PROFILE</div>
+        Good starting points: <code>pure</code>, <code>atomic</code>, <code>cloud-native-azure</code>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-high">high</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Windows Terminal — set Nerd Font + customize profiles</div>
+      <div class="card-desc">
+        After <code>profile-setup.ps1</code> runs: Settings → Defaults → Appearance → Font face → <code>JetBrainsMono Nerd Font</code>.
+        Add profiles for WSL/Ubuntu, Azure Cloud Shell, and SSH hosts.
+      </div>
+    </div>
+    <span class="badge badge-medium">medium</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">WSL Ubuntu — install &amp; run bootstrap</div>
+      <div class="card-desc">
+        WSL2 is enabled by <code>laptop-setup.ps1</code>. After reboot:
+        <details><summary>commands</summary>
+        <div class="snippet">wsl --install -d Ubuntu
+
+<span class="comment"># after Ubuntu first-run completes:</span>
+wsl -d Ubuntu -- bash /mnt/c/Users/$env:USERNAME/Scripts/wsl-bootstrap.sh</div>
+        Installs: zsh, Oh My Zsh, nvm, Node LTS, Gemini CLI, AWS CLI, Azure CLI,
+        gcloud, kubectl, Helm, Terraform, k9s, shell completions.
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-high">high</span>
+  </div>
+</div>
+
+<!-- ── Developer Config ───────────────────────────────────── -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">⚙</span>
+    <h2>Developer Config</h2>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Git global config</div>
+      <div class="card-desc">
+        Git is installed but unconfigured.
+        <details><summary>git-config.ps1 contents</summary>
+        <div class="snippet">git config --global user.name  <span class="flag">"Your Name"</span>
+git config --global user.email <span class="flag">"you@example.com"</span>
+git config --global init.defaultBranch main
+git config --global pull.rebase true
+git config --global core.autocrlf input
+git config --global core.pager <span class="flag">"delta"</span>
+git config --global delta.navigate true
+git config --global delta.side-by-side true
+git config --global credential.helper manager</div>
+        Also install delta: <code class="winget-id">winget install dandavison.delta</code>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-high">high</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">SSH key generation</div>
+      <div class="card-desc">
+        <details><summary>commands</summary>
+        <div class="snippet">ssh-keygen -t ed25519 -C <span class="flag">"you@example.com"</span>
+cat ~/.ssh/id_ed25519.pub | clip   <span class="comment"># copies to clipboard</span>
+Start-Process "https://github.com/settings/keys"</div>
+        Then set SSH for GitHub remotes:
+        <div class="snippet">git config --global url."git@github.com:".insteadOf "https://github.com/"</div>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-high">high</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">VS Code extensions</div>
+      <div class="card-desc">
+        Create <code>vscode-extensions.ps1</code> — fully scriptable via <code>code --install-extension</code>.
+        <details><summary>suggested extensions</summary>
+        <div class="snippet"><span class="comment"># IaC & Cloud</span>
+hashicorp.terraform
+ms-azuretools.vscode-docker
+ms-kubernetes-tools.vscode-kubernetes-tools
+<span class="comment"># Dev</span>
+ms-python.python
+ms-vscode-remote.remote-wsl
+ms-vscode-remote.remote-ssh
+github.copilot
+github.vscode-pull-request-github
+eamodio.gitlens
+<span class="comment"># Data formats</span>
+redhat.vscode-yaml
+tamasfe.even-better-toml
+esbenp.prettier-vscode</div>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-medium">medium</span>
+  </div>
+</div>
+
+<!-- ── Package Management ─────────────────────────────────── -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">📦</span>
+    <h2>Package Management</h2>
+  </div>
+
+  <div class="card done" onclick="toggle(this)">
+    <input type="checkbox" checked>
+    <div class="card-body">
+      <div class="card-title">delta — better git diffs</div>
+      <div class="card-desc">
+        Pairs with the git config above. Syntax-highlighted, side-by-side diffs.
+        <div class="snippet winget-id">winget install dandavison.delta</div>
+      </div>
+    </div>
+    <span class="badge badge-medium">medium</span>
+  </div>
+
+  <div class="card done" onclick="toggle(this)">
+    <input type="checkbox" checked>
+    <div class="card-body">
+      <div class="card-title">chezmoi — dotfiles management</div>
+      <div class="card-desc">
+        Syncs <code>$PROFILE</code>, <code>.gitconfig</code>, Windows Terminal settings, VS Code settings across machines via a private git repo. Set up once, pays back forever.
+        <details><summary>commands</summary>
+        <div class="snippet"><span class="winget-id">winget install twpayne.chezmoi</span>
+chezmoi init --apply https://github.com/<span class="flag">&lt;you&gt;</span>/dotfiles</div>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-medium">medium</span>
+  </div>
+
+  <div class="card done" onclick="toggle(this)">
+    <input type="checkbox" checked>
+    <div class="card-body">
+      <div class="card-title">pipx — isolated global Python tools</div>
+      <div class="card-desc">
+        Prevents <code>pip install --global</code> conflicts. Better for CLI tools like Ansible, pre-commit, black.
+        <details><summary>commands</summary>
+        <div class="snippet">pip install pipx
+pipx ensurepath
+pipx install pre-commit
+pipx install ansible</div>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-low">low</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Scoop — complement for PATH-friendly CLIs</div>
+      <div class="card-desc">
+        No admin required, tools land on PATH immediately without reboot. Best for <code>eza</code>, <code>zoxide</code>, and any tool winget installs in awkward locations.
+        <details><summary>commands</summary>
+        <div class="snippet">Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+irm get.scoop.sh | iex
+scoop install delta eza zoxide</div>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-low">low</span>
+  </div>
+
+  <div class="card done" onclick="toggle(this)">
+    <input type="checkbox" checked>
+    <div class="card-body">
+      <div class="card-title">pyenv-win — multiple Python versions</div>
+      <div class="card-desc">
+        Useful if projects target different Python versions.
+        <div class="snippet winget-id">winget install pyenv-win.pyenv-win</div>
+      </div>
+    </div>
+    <span class="badge badge-low">low</span>
+  </div>
+</div>
+
+<!-- ── System Tuning ──────────────────────────────────────── -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">🔧</span>
+    <h2>System Tuning</h2>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Power plan — verify High Performance after reboot</div>
+      <div class="card-desc">
+        <code>laptop-setup.ps1</code> sets this. Also check Armoury Crate → set to Manual or Turbo on this ROG hardware.
+        <div class="snippet">powercfg /getactivescheme   <span class="comment"># should show High performance</span></div>
+      </div>
+    </div>
+    <span class="badge badge-medium">medium</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Taskbar cleanup</div>
+      <div class="card-desc">
+        No reliable script for Windows 11. Right-click → Unpin for unused items.
+        Priority: remove Widgets, Chat (Teams), Copilot (already done by debloat.ps1).
+      </div>
+    </div>
+    <span class="badge badge-low">low</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Default browser &amp; file associations</div>
+      <div class="card-desc">
+        Windows 11 requires per-extension changes — no single cmdlet.
+        Settings → Apps → Default apps. Set Brave or Chrome as default,
+        and VS Code for <code>.json</code>, <code>.yaml</code>, <code>.tf</code>, etc.
+      </div>
+    </div>
+    <span class="badge badge-low">low</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Windows Search — limit indexed locations</div>
+      <div class="card-desc">
+        Default indexing crawls everything and spikes disk I/O. Settings → Privacy & security → Searching Windows → set to "Classic" or exclude <code>node_modules</code>, <code>Program Files</code>.
+      </div>
+    </div>
+    <span class="badge badge-low">low</span>
+  </div>
+
+  <div class="card done" onclick="toggle(this)">
+    <input type="checkbox" checked>
+    <div class="card-body">
+      <div class="card-title">Scheduled WSL apt updates</div>
+      <div class="card-desc">
+        The weekly task only covers Windows packages. Add a second task for WSL:
+        <div class="snippet">wsl -d Ubuntu -- sudo apt update -qq && sudo apt upgrade -y</div>
+      </div>
+    </div>
+    <span class="badge badge-low">low</span>
+  </div>
+</div>
+
+<!-- ── WSL / Docker / Cloud ───────────────────────────────── -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">🐳</span>
+    <h2>WSL / Docker / Cloud</h2>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">.wslconfig — tune memory for your workload</div>
+      <div class="card-desc">
+        <code>laptop-setup.ps1</code> creates a baseline: 8 GB / 4 CPUs / 2 GB swap.
+        Adjust <code>~\.wslconfig</code> based on actual usage. If you have 32 GB RAM, bump to 16 GB / 8 CPUs.
+      </div>
+    </div>
+    <span class="badge badge-medium">medium</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Docker Desktop — enable WSL2 backend</div>
+      <div class="card-desc">
+        After Docker Desktop installs, open it manually:<br>
+        Settings → General → ✓ Use the WSL 2 based engine<br>
+        Settings → Resources → WSL Integration → ✓ Ubuntu
+      </div>
+    </div>
+    <span class="badge badge-high">high</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">kubeconfig — multi-cluster context management</div>
+      <div class="card-desc">
+        When you add EKS/AKS/GKE clusters, merge contexts and use <code>kctx</code> (in <code>powershell-profile.ps1</code>) to switch.
+        <details><summary>merge command</summary>
+        <div class="snippet">$env:KUBECONFIG = "$HOME\.kube\config;$HOME\.kube\eks-prod"
+kubectl config view --merge --flatten > "$HOME\.kube\merged"
+Copy-Item "$HOME\.kube\merged" "$HOME\.kube\config"</div>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-info">info</span>
+  </div>
+</div>
+
+<!-- ── Security & Identity ────────────────────────────────── -->
+<div class="section">
+  <div class="section-header">
+    <span class="section-icon">🔑</span>
+    <h2>Security &amp; Identity</h2>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">1Password CLI (<code>op</code>)</div>
+      <div class="card-desc">
+        Enables secret injection into shell sessions — no more <code>.env</code> files with plaintext creds.
+        <details><summary>commands</summary>
+        <div class="snippet"><span class="winget-id">winget install AgileBits.1Password.CLI</span>
+op signin
+op run --env-file=.env -- your-command</div>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-medium">medium</span>
+  </div>
+
+  <div class="card" onclick="toggle(this)">
+    <input type="checkbox">
+    <div class="card-body">
+      <div class="card-title">Cloud CLI auth (first-run)</div>
+      <div class="card-desc">
+        After install, each cloud CLI needs an initial auth step — these can't be scripted.
+        <details><summary>auth commands</summary>
+        <div class="snippet">aws configure                   <span class="comment"># AWS access key + region</span>
+az login                        <span class="comment"># browser OAuth</span>
+gcloud init                     <span class="comment"># browser OAuth + project</span>
+gh auth login                   <span class="comment"># GitHub — choose SSH or token</span></div>
+        </details>
+      </div>
+    </div>
+    <span class="badge badge-high">high</span>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+  // Persist checkbox state in localStorage
+  const STORE_KEY = 'laptop-todo-v1';
+
+  function save() {
+    const state = {};
+    document.querySelectorAll('.card').forEach((card, i) => {
+      state[i] = card.querySelector('input').checked;
+    });
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    updateProgress();
+  }
+
+  function load() {
+    const state = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    document.querySelectorAll('.card').forEach((card, i) => {
+      if (state[i]) {
+        card.querySelector('input').checked = true;
+        card.classList.add('done');
+      }
+    });
+    updateProgress();
+  }
+
+  function toggle(card) {
+    const cb = card.querySelector('input');
+    cb.checked = !cb.checked;
+    card.classList.toggle('done', cb.checked);
+    save();
+  }
+
+  // Prevent double-toggle when clicking directly on the checkbox
+  document.querySelectorAll('.card input').forEach(cb => {
+    cb.addEventListener('click', e => e.stopPropagation());
+    cb.addEventListener('change', () => {
+      cb.closest('.card').classList.toggle('done', cb.checked);
+      save();
+    });
+  });
+
+  function updateProgress() {
+    const cards = document.querySelectorAll('.card');
+    const done  = document.querySelectorAll('.card input:checked').length;
+    const total = cards.length;
+    const pct   = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById('progressBar').style.width  = pct + '%';
+    document.getElementById('progressLabel').textContent = `${done} of ${total} complete (${pct}%)`;
+  }
+
+  load();
+</script>
+</body>
+</html>
